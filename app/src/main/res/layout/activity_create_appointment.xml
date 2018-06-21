@@ -14,56 +14,100 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent">
+            android:layout_height="match_parent" >
 
-            <TextView
-                android:text="Select Date"
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:layout_marginLeft="@dimen/fab_margin"
-                android:textSize="30sp"
-                android:textAlignment="center"
-                android:textStyle="normal|bold"
-                android:textColor="@android:color/darker_gray"
-                android:background="@android:color/transparent" />
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/textTitle"
+                android:hint="Title" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent">
+            android:layout_height="match_parent" >
 
-            <DatePicker
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/datePicker"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="16dp"
-                android:background="@android:color/transparent" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/textNotes"
+                android:hint="Additional notes..." />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent">
+            android:layout_height="match_parent" >
 
-            <Button
-                android:text="Continue"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/button"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_marginLeft="@dimen/activity_vertical_margin" />
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Pick a date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonPickDate"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="Select Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDate"
+                    android:layout_weight="1" />
+            </LinearLayout>
         </TableRow>
 
+        <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Pick a time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonPickTime"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="Select Time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewTime"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        <Button
+            android:text="Create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonCreate"
+            android:layout_marginBottom="204dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="17dp" />
+        </TableRow>
     </TableLayout>
 
 </RelativeLayout>

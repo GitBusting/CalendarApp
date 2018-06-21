@@ -28,30 +28,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), CreateAppointmentActivity.class);
-                startActivity(i);
+                startActivityForResult(i, 1);
             }
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // No need to use the result nor the request codes
+        // here since CreateAppointmentActivity
+        // currently only responds with an Appointment instance
+        // Actually I take it back
+        // since the user can close the activity using
+        // the on-screen buttons as well.
+        if(resultCode == RESULT_OK) {
+            Appointment apt = (Appointment) data.getSerializableExtra("new-apt");
+            this.handleNewAppointment(apt);
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    // Template method that handles
+    // the creation of a new appointment
+    public void handleNewAppointment(Appointment newApt)
+    {
+        String disp = "Created new appointment\nOn " +
+                newApt.getDate() + " " + newApt.getTime() +
+                "\nTitled: " + newApt.getTitle();
+        Snackbar.make(findViewById(R.id.content_main), disp, 10000).show();
     }
 }
