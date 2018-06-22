@@ -36,7 +36,8 @@ public class CreateAppointmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO change hardcoded default starting date.
-                DatePickerDialog dpd = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         pickedDate = String.format("%02d-%02d-%d",dayOfMonth,(month+1),year);
@@ -49,7 +50,8 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         findViewById(R.id.buttonPickTime).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog tpd = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog tpd = new TimePickerDialog(v.getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         pickedTime = String.format("%02d:%02d",hourOfDay,minute);
@@ -64,8 +66,10 @@ public class CreateAppointmentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String title = textTitle.getText().toString();
                 String notes = textTitle.getText().toString();
-                if(title.equals("") || notes.equals("") || pickedDate == null || pickedTime == null)
-                    Snackbar.make(v,"Please fill all the fields above before clicking \"CREATE\"",5000).show();
+                if(title.equals("") || notes.equals("") || pickedDate == null ||
+                        pickedTime == null)
+                    Snackbar.make(v,"Please fill all the fields above before " +
+                            "clicking \"CREATE\"",5000).show();
                 else
                 {
                     System.out.println("Title: " + title + "Notes: " + notes);
