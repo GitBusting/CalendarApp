@@ -28,12 +28,24 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:srcCompat="@android:drawable/ic_menu_month"
-        android:id="@+id/fab"
+        android:id="@+id/fabCreate"
         android:layout_gravity="bottom|right"
         app:elevation="0dp"
         app:fabSize="normal"
         app:layout_anchorGravity="bottom|center_horizontal"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size"
+        android:id="@+id/fabList"
+        app:layout_anchorGravity="bottom|left"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.squareup.timessquare.CalendarPickerView;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,13 +75,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabCreate);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(),
                         CreateAppointmentActivity.class);
                 startActivityForResult(i, 1);
+            }
+        });
+
+        FloatingActionButton fabList = (FloatingActionButton) findViewById(R.id.fabList);
+        fabList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(),
+                        ListAppointmentsActivity.class);
+                i.putExtra("apt-list",apts);
+                startActivity(i);
             }
         });
     }
@@ -129,4 +142,5 @@ public class MainActivity extends AppCompatActivity {
         aptList.add(aptDate);
         calendar.highlightDates(aptList);
     }
+
 }

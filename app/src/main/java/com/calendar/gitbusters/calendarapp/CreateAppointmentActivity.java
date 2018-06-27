@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -65,7 +64,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String title = textTitle.getText().toString();
-                String notes = textTitle.getText().toString();
+                String notes = textNotes.getText().toString();
                 if(title.equals("") || notes.equals("") || pickedDate == null ||
                         pickedTime == null)
                     Snackbar.make(v,"Please fill all the fields above before " +
