@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Pull user's appointments from the database.
+        synchronizeAppointments();
+
         // Initialize a calendarpickerview with today
         // as the minDate and a year later as the maxDate
         Calendar nextYear = Calendar.getInstance();
@@ -58,16 +61,12 @@ public class MainActivity extends AppCompatActivity {
                     if(searchApt.getDate().equals(selDate))
                         apt = searchApt;
                 }
+                // Show apt's title if any appointment matches.
                 if(apt == null)
                     return;
                 else
-                {
-                    // TODO Probably switch to a new activity
-                    // that displays a list of appointments
-                    // Display some text for now...
-                    Snackbar.make(findViewById(R.id.content_main),"There is an event on " +
-                            "the selected date", 3000).show();
-                }
+                    Snackbar.make(findViewById(R.id.content_main),apt.getTitle(), 3000).show();
+
             }
 
             @Override
@@ -79,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // switch to appointment creator activity when clicked
                 Intent i = new Intent(view.getContext(),
                         CreateAppointmentActivity.class);
                 startActivityForResult(i, 1);
@@ -89,8 +89,12 @@ public class MainActivity extends AppCompatActivity {
         fabList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // switch to appointment lister activity when clicked
                 Intent i = new Intent(view.getContext(),
                         ListAppointmentsActivity.class);
+                // TODO there may be a better way to share appointments
+                // with the appointment lister activity, use intent
+                // extras for now
                 i.putExtra("apt-list",apts);
                 startActivity(i);
             }
@@ -112,8 +116,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Template method that handles
-    // the creation of a new appointment
+    /**
+     * Given an appointment displays some of it's info
+     * on the screen. This function is expected to be called
+     * when CreateAppointmentActivity finishes with a specific
+     * result code.
+     * @param newApt the newly created appointment
+     */
     private void handleNewAppointment(Appointment newApt)
     {
         String disp = "Created new appointment\nOn " +
@@ -123,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
         addNewApt(newApt);
     }
 
+    /**
+     * Given an appointment highlights it's date on the calendar
+     * and adds it to the appointment list.
+     * @param apt appointment to add to list.
+     */
     private void addNewApt(Appointment apt)
     {
         apts.add(apt);
@@ -141,6 +155,16 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Date> aptList = new ArrayList<>();
         aptList.add(aptDate);
         calendar.highlightDates(aptList);
+    }
+
+    /**
+     * TODO a template appointment list initializer function
+     * This function is called to synchronize user's events
+     * with whatever that is in the database.
+     */
+    private void synchronizeAppointments()
+    {
+
     }
 
 }

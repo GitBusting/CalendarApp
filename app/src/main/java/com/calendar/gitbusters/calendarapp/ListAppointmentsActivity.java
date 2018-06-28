@@ -20,10 +20,11 @@ public class ListAppointmentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_appointments);
-        // fill the list using MainActivity's data
+        // Fill the list using MainActivity's data
         aptList = (ArrayList<Appointment>) getIntent().getSerializableExtra("apt-list");
         ll = (LinearLayout) findViewById(R.id.listAppointmentsLL);
 
+        // Fill the actual list (LinearLayout) using event info
         if(aptList.size() > 0)
             setListElements();
         else
@@ -38,22 +39,27 @@ public class ListAppointmentsActivity extends AppCompatActivity {
     {
         for(Appointment i : aptList)
         {
+            // Create a textview that displays event info and a button
+            // that TODO will let user edit event info.
             TextView tv = new TextView(this);
             Button b = new Button(this);
             tv.setText(i.getTitle() + "\n" + i.getNotes() + "\n" + i.getDate()
                     + ": " + i.getTime());
             b.setText("EDIT");
 
+            // Do the below for a relatively more beautiful list layout.
+            tv.setLayoutParams(new
+                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,0.2f));
+            b.setLayoutParams(new
+                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,0.8f));
+
             LinearLayout horizontalLL = new LinearLayout(this);
             horizontalLL.setOrientation(LinearLayout.HORIZONTAL);
 
             horizontalLL.addView(tv);
             horizontalLL.addView(b);
-
-            ViewGroup.LayoutParams layoutParams = new
-                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            horizontalLL.setLayoutParams(layoutParams);
 
             ll.addView(horizontalLL);
         }
