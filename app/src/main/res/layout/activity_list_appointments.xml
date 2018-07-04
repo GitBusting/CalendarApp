@@ -11,24 +11,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.calendar.gitbusters.calendarapp.ListAppointmentsActivity">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="526dp">
 
             <LinearLayout
+                android:id="@+id/listAppointmentsLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/listAppointmentsLL"
-                >
+                android:orientation="vertical">
 
             </LinearLayout>
         </ScrollView>
-    </FrameLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/SearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:hint="Search" />
+
+    </RelativeLayout>
+
 </RelativeLayout>
