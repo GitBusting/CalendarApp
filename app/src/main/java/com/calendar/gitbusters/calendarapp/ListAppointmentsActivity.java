@@ -14,7 +14,7 @@ public class ListAppointmentsActivity extends AppCompatActivity {
 
     private ArrayList<Appointment> aptList = null;
     private LinearLayout ll = null;
-    private TextInputEditText searchbar;
+    private TextInputEditText searchBar;
     private String search="";
 
     @Override
@@ -26,8 +26,8 @@ public class ListAppointmentsActivity extends AppCompatActivity {
         ll = (LinearLayout) findViewById(R.id.listAppointmentsLL);
 
 
-        searchbar = (TextInputEditText)findViewById(R.id.SearchBar);
-        searchbar.addTextChangedListener(watchSearch);
+        searchBar = (TextInputEditText)findViewById(R.id.SearchBar);
+        searchBar.addTextChangedListener(watchSearch);
         // Fill the actual list (LinearLayout) using event info
         if(aptList.size() > 0)
             setListElements();
@@ -85,13 +85,13 @@ public class ListAppointmentsActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            search = searchbar.getText().toString();
+            search = searchBar.getText().toString();
             setListElements();
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            search = searchbar.getText().toString();
+            search = searchBar.getText().toString();
             setListElements();
         }
     };
