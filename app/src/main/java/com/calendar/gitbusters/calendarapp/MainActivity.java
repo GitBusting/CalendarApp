@@ -162,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void synchronizeAppointments()
     {
-
+        Thread syn = new Thread(new Synchronizer());
+        syn.start();
     }
 
 }

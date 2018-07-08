@@ -25,5 +25,5 @@
         <activity android:name=".ListAppointmentsActivity">
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
