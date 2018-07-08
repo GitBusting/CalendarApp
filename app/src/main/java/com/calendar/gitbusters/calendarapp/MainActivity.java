@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     // References to some important objects
     private static ArrayList<Appointment> apts = null;
     private static CalendarPickerView calendar = null;
-
+    Synchronizer syn = new Synchronizer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +29,15 @@ public class MainActivity extends AppCompatActivity {
         // Pull user's appointments from the database.
         synchronizeAppointments();
 
-        // Initialize a calendarpickerview with today
+        // Initialize a calendarpickerview with a year earlier
         // as the minDate and a year later as the maxDate
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
         calendar = (CalendarPickerView) findViewById(R.id.calendarView);
-        Date today = new Date();
-        calendar.init(today, nextYear.getTime())
-                .withSelectedDate(today).inMode(CalendarPickerView.SelectionMode.SINGLE);
+        Calendar prevYear = Calendar.getInstance();
+        prevYear.add(Calendar.YEAR, -1);
+        calendar.init(prevYear.getTime(), nextYear.getTime())
+                .withSelectedDate(new Date()).inMode(CalendarPickerView.SelectionMode.SINGLE);
 
         // Initialize the proposed structure
         // for holding the user's appointments
@@ -97,6 +98,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        // Wait for the thread that pulls appointments
+        // from web-servers to finish
+        try {
+            syn.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for(Appointment apt : syn.getApts())
+            this.handleNewAppointment(apt);
     }
 
     @Override
@@ -108,8 +120,12 @@ public class MainActivity extends AppCompatActivity {
         // Actually I take it back
         // since the user can close the activity using
         // the on-screen buttons as well.
+
         if(resultCode == RESULT_OK) {
             Appointment apt = (Appointment) data.getSerializableExtra("new-apt");
+            syn = new Synchronizer();
+            syn.addApt(apt);
+            syn.start();
             this.handleNewAppointment(apt);
         }
     }
@@ -162,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void synchronizeAppointments()
     {
-        Thread syn = new Thread(new Synchronizer());
         syn.start();
     }
 
