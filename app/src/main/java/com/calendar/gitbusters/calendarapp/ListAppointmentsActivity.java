@@ -156,12 +156,12 @@ public class ListAppointmentsActivity extends AppCompatActivity {
 
             ll.addView(horizontalLL);
         }
-        /*if(ll.getChildCount() == 0)
+        if(ll.getChildCount() == 0)
         {
             TextView tv = new TextView(this);
             tv.setText("There seems to be nothing here...");
             ll.addView(tv);
-        }*/
+        }
     }
     private TextWatcher watchSearch = new TextWatcher() {
         @Override
