@@ -55,7 +55,7 @@ public class Synchronizer extends Thread {
                 OutputStreamWriter out = new OutputStreamWriter(connPut.getOutputStream());
                 Appointment apt = apts.get(0);
 
-
+                // Post all newly created apts to database.
                 while(apts.size()>0)
                 {
                     out.write(apt.parseJSONObject().toString());
@@ -64,24 +64,15 @@ public class Synchronizer extends Thread {
                     apts.remove(0);
                 }
                 out.close();
-                if(connPut.getResponseCode() == 200){
-                    StringBuilder sb = new StringBuilder();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(
-                            connPut.getInputStream(),"utf-8"));
-                    String line = null;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                    br.close();
-
-                    System.out.println(""+sb.toString());
-
-                }else{
+                if(connPut.getResponseCode() == 200)
+                    System.out.println("Successfully posted a new apt.");
+                else
                     System.out.println(connPut.getResponseMessage());
-                }
+
                 connPut.disconnect();
             }
 
+            // Get all apts from database
             conn =
                     (HttpsURLConnection) webServerUrl.openConnection();
             conn.setReadTimeout(10000 /* milliseconds */);
