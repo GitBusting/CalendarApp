@@ -1,5 +1,8 @@
 package com.calendar.gitbusters.calendarapp;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -51,6 +54,29 @@ public class Appointment implements Serializable{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * @return a JSON object representing this appointment
+     */
+    public JSONObject parseJSONObject()
+    {
+        JSONObject jso = new JSONObject();
+        try {
+            jso.put("id",23193);
+            jso.put("name",this.title);
+            String[] dp = this.date.split("-");
+            String dateTime = dp[2] + "-" + dp[1] + "-" + dp[0] + "T";
+            dateTime += this.time + ":00.000Z";
+            jso.put("start_time",dateTime);
+            jso.put("created_at","XD");
+            jso.put("updated_at","XDD");
+            jso.put("url","https://killmepls.com");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jso;
     }
 
 }
