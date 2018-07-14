@@ -9,14 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -77,7 +76,7 @@ public class ListAppointmentsActivity extends AppCompatActivity {
         else
         {
             TextView tv = new TextView(this);
-            tv.setText("There seems to be nothing here...");
+            tv.setText(R.string.nothingtxt);
             ll.addView(tv);
         }
     }
@@ -94,7 +93,7 @@ public class ListAppointmentsActivity extends AppCompatActivity {
             if (sorting.equals(sort.incDate))
                 ListingDS = new TreeMap<>(Comparator.<Date>naturalOrder());
             else ListingDS = new TreeMap<>(Comparator.<Date>reverseOrder());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.UK);
             for (Appointment i : aptList) {
 
                 String txt = i.getTitle() + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime();
@@ -111,10 +110,10 @@ public class ListAppointmentsActivity extends AppCompatActivity {
             if (sorting.equals(sort.incName))
                 ListingSD = new TreeMap<>();
             else ListingSD = new TreeMap<>(Comparator.<String>reverseOrder());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm",Locale.UK);
             for (Appointment i : aptList) {
 
-                String txt = i.getTitle() + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime();
+                String txt = i.getTitle().substring(0,1).toUpperCase()+ i.getTitle().substring(1) + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime();
                 if (!txt.toLowerCase().contains(search.toLowerCase())) continue;
                 try {
                     Date datentime = dateFormat.parse(i.getDate() + " " + i.getTime());
@@ -126,27 +125,26 @@ public class ListAppointmentsActivity extends AppCompatActivity {
             set = ListingSD.entrySet();
         }
 
-        Iterator iterator = set.iterator();
-        while(iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry)iterator.next();
+        for (Object aSet : set) {
+            Map.Entry entry = (Map.Entry) aSet;
             // Create a textview that displays event info and a button
             // that TODO will let user edit event info.
             TextView tv = new TextView(this);
             Button b = new Button(this);
 
-            if(sorting.equals(sort.decDate)||sorting.equals(sort.incDate)) {
+            if (sorting.equals(sort.decDate) || sorting.equals(sort.incDate)) {
                 tv.setText(entry.getValue().toString());
-            }else
+            } else
                 tv.setText(entry.getKey().toString());
-            b.setText("EDIT");
+            b.setText(R.string.editButtonTxt);
 
             // Do the below for a relatively more beautiful list layout.
             tv.setLayoutParams(new
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT,0.2f));
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0.2f));
             b.setLayoutParams(new
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT,0.8f));
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0.8f));
 
             LinearLayout horizontalLL = new LinearLayout(this);
             horizontalLL.setOrientation(LinearLayout.HORIZONTAL);
@@ -159,7 +157,7 @@ public class ListAppointmentsActivity extends AppCompatActivity {
         if(ll.getChildCount() == 0)
         {
             TextView tv = new TextView(this);
-            tv.setText("There seems to be nothing here...");
+            tv.setText(R.string.nothingtxt);
             ll.addView(tv);
         }
     }
