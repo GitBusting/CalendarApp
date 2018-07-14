@@ -85,15 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 // switch to appointment creator activity when clicked
                 Intent i = new Intent(view.getContext(),
                         CreateAppointmentActivity.class);
-                if(highlightedDate.isEmpty()) {
-                    Calendar cldr = Calendar.getInstance();
-                    cldr.setTimeInMillis(new Date().getTime());
-                    int mYear = cldr.get(Calendar.YEAR);
-                    int mMonth = cldr.get(Calendar.MONTH) + 1;
-                    int mDay = cldr.get(Calendar.DAY_OF_MONTH);
-                    highlightedDate = String.format("%02d-%02d-%d",mDay,mMonth,mYear);
-                    i.putExtra("Highlighted-Date", highlightedDate);
-                }else
+                if (!highlightedDate.isEmpty())
                     i.putExtra("Highlighted-Date", highlightedDate);
                 startActivityForResult(i, 1);
             }
