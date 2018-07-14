@@ -139,10 +139,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleNewAppointment(Appointment newApt)
     {
-        String disp = "Created a new appointment\nOn " +
-                newApt.getDate() + " " + newApt.getTime() +
-                "\nTitled: " + newApt.getTitle();
-        Snackbar.make(findViewById(R.id.content_main), disp, 10000).show();
+        if(!newApt.isSync()) {
+            String disp = "Created a new appointment\nOn " +
+                    newApt.getDate() + " " + newApt.getTime() +
+                    "\nTitled: " + newApt.getTitle();
+            Snackbar.make(findViewById(R.id.content_main), disp, 10000).show();
+        }
         addNewApt(newApt);
     }
 

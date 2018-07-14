@@ -23,6 +23,7 @@ public class Appointment implements Serializable{
     private String notes;
     private String time;
     private String title;
+    private boolean sync = false; //by default
 
     public String getDate() {
         return date;
@@ -56,6 +57,9 @@ public class Appointment implements Serializable{
         this.title = title;
     }
 
+    public void setSync(boolean sync) { this.sync = sync; }
+
+    public boolean isSync() { return sync; }
     /**
      * @return a JSON object representing this appointment
      */
