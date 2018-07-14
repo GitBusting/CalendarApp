@@ -5,4 +5,5 @@
     <string name="search">Search</string>
     <string name="nothingtxt">There seems to be nothing here...</string>
     <string name="editButtonTxt">EDIT</string>
+    <string name="defaultPickedTime">12:00</string>
 </resources>

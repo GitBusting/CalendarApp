@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     // References to some important objects
     private static ArrayList<Appointment> apts = null;
     private static CalendarPickerView calendar = null;
+    private static String highlightedDate = "";
     Synchronizer syn = new Synchronizer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize a calendarpickerview with a year earlier
         // as the minDate and a year later as the maxDate
+
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
         calendar = (CalendarPickerView) findViewById(R.id.calendarView);
@@ -61,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
                         apt = searchApt;
                 }
                 // Show apt's title if any appointment matches.
-                if(apt == null)
+
+                highlightedDate = String.format("%02d-%02d-%d", mDay, mMonth+1, mYear);
+                if(apt == null) {
                     return;
+                }
                 else
                     Snackbar.make(findViewById(R.id.content_main),apt.getTitle(), 3000).show();
 
@@ -80,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
                 // switch to appointment creator activity when clicked
                 Intent i = new Intent(view.getContext(),
                         CreateAppointmentActivity.class);
+                if(highlightedDate.isEmpty()) {
+                    Calendar cldr = Calendar.getInstance();
+                    cldr.setTimeInMillis(new Date().getTime());
+                    int mYear = cldr.get(Calendar.YEAR);
+                    int mMonth = cldr.get(Calendar.MONTH) + 1;
+                    int mDay = cldr.get(Calendar.DAY_OF_MONTH);
+                    highlightedDate = String.format("%02d-%02d-%d",mDay,mMonth,mYear);
+                    i.putExtra("Highlighted-Date", highlightedDate);
+                }else
+                    i.putExtra("Highlighted-Date", highlightedDate);
                 startActivityForResult(i, 1);
             }
         });

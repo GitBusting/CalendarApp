@@ -18,19 +18,32 @@ public class CreateAppointmentActivity extends AppCompatActivity {
     private TextView textViewTime, textViewDate;
 
     private String pickedDate = null;
-    private String pickedTime = null;
+    private String pickedTime = "12:00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_appointment);
-
+        String createDate;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                createDate= null;
+            } else {
+                createDate= extras.getString("Highlighted-Date");
+            }
+        } else {
+            createDate= (String) savedInstanceState.getSerializable("Highlighted-Date");
+        }
+        pickedDate=createDate;
         // Set up references to GUI elements
         textViewDate = (TextView) findViewById(R.id.textViewDate);
         textViewTime = (TextView) findViewById(R.id.textViewTime);
         textTitle = (EditText) findViewById(R.id.textTitle);
         textNotes = (EditText) findViewById(R.id.textNotes);
 
+        if(pickedDate!=null) textViewDate.setText(pickedDate);
+        textViewTime.setText(pickedTime);
         findViewById(R.id.buttonPickDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
