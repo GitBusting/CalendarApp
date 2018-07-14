@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CalendarApp</string>
     <string name="action_settings">Settings</string>
-    <string name="apt_example_list_entry">TDF\nTDgfdgfdasdadwadasdwwadwadwqdwadsadsdawdadwadwadasadsdsadsadsadsadsadsadsadsadsadsadsadsadsadsadsadsadsadsadsa\n21-02-03: 43-34</string>
+    <string name="apt_example_list_entry">Imeaan\nLoL\n21-02-03: 43-34</string>
     <string name="search">Search</string>
+    <string name="nothingtxt">There seems to be nothing here...</string>
+    <string name="editButtonTxt">EDIT</string>
 </resources>
