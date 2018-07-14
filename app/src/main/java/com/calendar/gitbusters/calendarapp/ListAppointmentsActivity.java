@@ -85,30 +85,32 @@ public class ListAppointmentsActivity extends AppCompatActivity {
     {
         ll.removeAllViewsInLayout();
 
-        TreeMap<Date, String> ListingDS;
+        TreeMap<String, String> ListingSS;
 
         TreeMap<String, Date> ListingSD;
         Set set;
         if(sorting.equals(sort.decDate)||sorting.equals(sort.incDate)) {
             if (sorting.equals(sort.incDate))
-                ListingDS = new TreeMap<>(Comparator.<Date>naturalOrder());
-            else ListingDS = new TreeMap<>(Comparator.<Date>reverseOrder());
+                ListingSS = new TreeMap<>(Comparator.<String>naturalOrder());
+            else ListingSS = new TreeMap<>(Comparator.<String>reverseOrder());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.UK);
             for (Appointment i : aptList) {
 
                 String txt = i.getTitle() + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime();
                 if (!txt.toLowerCase().contains(search.toLowerCase())) continue;
                 try {
-                    Date datentime = dateFormat.parse(i.getDate() + " " + i.getTime());
-                    ListingDS.put(datentime, txt);
+                    Date dateAndTime = dateFormat.parse(i.getDate() + " " + i.getTime());
+                    String datePlusTitle = dateAndTime.getTime() + i.getTitle();
+                    String toPrint = i.getTitle() + "\n" + i.getNotes() + "\n" +dateAndTime.toString();
+                    ListingSS.put(datePlusTitle, toPrint);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
-            set = ListingDS.entrySet();
+            set = ListingSS.entrySet();
         }else {
             if (sorting.equals(sort.incName))
-                ListingSD = new TreeMap<>();
+                ListingSD = new TreeMap<>(Comparator.<String>naturalOrder());
             else ListingSD = new TreeMap<>(Comparator.<String>reverseOrder());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm",Locale.UK);
             for (Appointment i : aptList) {
@@ -116,8 +118,9 @@ public class ListAppointmentsActivity extends AppCompatActivity {
                 String txt = i.getTitle().substring(0,1).toUpperCase()+ i.getTitle().substring(1) + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime();
                 if (!txt.toLowerCase().contains(search.toLowerCase())) continue;
                 try {
-                    Date datentime = dateFormat.parse(i.getDate() + " " + i.getTime());
-                    ListingSD.put(txt, datentime);
+                    Date dateAndTime = dateFormat.parse(i.getDate() + " " + i.getTime());
+                    String toPrint = i.getTitle() + "\n" + i.getNotes() + "\n" +dateAndTime.toString();
+                    ListingSD.put(toPrint, dateAndTime);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
