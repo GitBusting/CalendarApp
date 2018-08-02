@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -100,6 +99,7 @@ public class Synchronizer extends Thread {
                             String val = jsonReader.nextString();
                             apt.setTitle(val);
                             System.out.println("title: " + val);
+                            apt.setSync(false);
                         }
                         // Extract date and time from this field
                         else if (key.equals("start_time"))
@@ -114,6 +114,7 @@ public class Synchronizer extends Thread {
                             System.out.println("date: " + date + " time: " + time);
                             apt.setDate(date);
                             apt.setTime(time);
+                            apt.setSync(true);
                         }else // we do not need these
                             jsonReader.skipValue();
                     }

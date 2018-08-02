@@ -2,10 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.1'
     defaultConfig {
         applicationId "com.calendar.gitbusters.calendarapp"
-        minSdkVersion 21
+        minSdkVersion 24
+        //noinspection OldTargetApi
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -17,16 +18,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.squareup:android-times-square:1.6.5@aar'
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.squareup:android-times-square:1.6.5@aar'
+    androidTestImplementation 'junit:junit:4.12'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }

@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     // References to some important objects
     private static ArrayList<Appointment> apts = null;
     private static CalendarPickerView calendar = null;
+    private static String highlightedDate = "";
     Synchronizer syn = new Synchronizer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize a calendarpickerview with a year earlier
         // as the minDate and a year later as the maxDate
+
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
         calendar = (CalendarPickerView) findViewById(R.id.calendarView);
@@ -61,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
                         apt = searchApt;
                 }
                 // Show apt's title if any appointment matches.
-                if(apt == null)
+
+                highlightedDate = String.format("%02d-%02d-%d", mDay, mMonth+1, mYear);
+                if(apt == null) {
                     return;
+                }
                 else
                     Snackbar.make(findViewById(R.id.content_main),apt.getTitle(), 3000).show();
 
@@ -80,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 // switch to appointment creator activity when clicked
                 Intent i = new Intent(view.getContext(),
                         CreateAppointmentActivity.class);
+                if (!highlightedDate.isEmpty())
+                    i.putExtra("Highlighted-Date", highlightedDate);
                 startActivityForResult(i, 1);
             }
         });
@@ -139,10 +146,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleNewAppointment(Appointment newApt)
     {
-        String disp = "Created a new appointment\nOn " +
-                newApt.getDate() + " " + newApt.getTime() +
-                "\nTitled: " + newApt.getTitle();
-        Snackbar.make(findViewById(R.id.content_main), disp, 10000).show();
+        if(!newApt.isSync()) {
+            String disp = "Created a new appointment\nOn " +
+                    newApt.getDate() + " " + newApt.getTime() +
+                    "\nTitled: " + newApt.getTitle();
+            Snackbar.make(findViewById(R.id.content_main), disp, 10000).show();
+        }
         addNewApt(newApt);
     }
 
