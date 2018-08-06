@@ -17,7 +17,7 @@ import java.util.Date;
 
 public class CreateAppointmentActivity extends AppCompatActivity {
 
-    private EditText textTitle, textNotes;
+    private EditText textTitle, textNotes, textPeriod;
     private TextView textViewTime, textViewDate;
 
     private String pickedDate = null;
@@ -51,6 +51,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         textViewTime = (TextView) findViewById(R.id.textViewTime);
         textTitle = (EditText) findViewById(R.id.textTitle);
         textNotes = (EditText) findViewById(R.id.textNotes);
+        textPeriod = (EditText) findViewById(R.id.textPeriod);
 
         if(pickedDate!=null) textViewDate.setText(pickedDate);
         textViewTime.setText(pickedTime);
@@ -87,6 +88,9 @@ public class CreateAppointmentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String title = textTitle.getText().toString();
                 String notes = textNotes.getText().toString();
+                int period = 0;
+                if (!textPeriod.getText().toString().equals(""))
+                    period = Integer.parseInt(textPeriod.getText().toString());
                 if(title.equals("") || notes.equals("") || pickedDate == null ||
                         pickedTime == null)
                     Snackbar.make(v,"Please fill all the fields above before " +
@@ -94,17 +98,18 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                 else
                 {
                     System.out.println("Title: " + title + "Notes: " + notes);
-                    createAppointment(title,notes,pickedDate,pickedTime);
+                    createAppointment(title, notes, period, pickedDate, pickedTime);
                 }
             }
         });
     }
 
-    private final void createAppointment(String title, String notes, String date, String time)
+    private final void createAppointment(String title, String notes, int period, String date, String time)
     {
         Appointment apt = new Appointment();
         apt.setTitle(title);
         apt.setNotes(notes);
+        apt.setPeriod(period);
         apt.setDate(date);
         apt.setTime(time);
         // Finish this activity and send the new appointment

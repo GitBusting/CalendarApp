@@ -23,6 +23,16 @@ public class Appointment implements Serializable{
     private String notes;
     private String time;
     private String title;
+
+    private int period = 0;
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
     private boolean sync = false; //by default
 
     public String getDate() {
@@ -60,6 +70,7 @@ public class Appointment implements Serializable{
     public void setSync(boolean sync) { this.sync = sync; }
 
     public boolean isSync() { return sync; }
+
     /**
      * @return a JSON object representing this appointment
      */
@@ -75,6 +86,7 @@ public class Appointment implements Serializable{
             jso.put("start_time",dateTime);
             jso.put("created_at","XD");
             jso.put("updated_at","XDD");
+            jso.put("period", this.period);
             jso.put("url","https://killmepls.com");
         } catch (JSONException e) {
             e.printStackTrace();

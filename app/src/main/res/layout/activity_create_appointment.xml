@@ -14,36 +14,49 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <EditText
+                android:id="@+id/textTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text"
-                android:id="@+id/textTitle"
                 android:hint="Title"
-                android:minWidth="380dp"
-                android:maxWidth="380dp"/>
+                android:inputType="text"
+                android:maxWidth="380dp"
+                android:minWidth="380dp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <EditText
+                android:id="@+id/textNotes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine"
                 android:ems="10"
-                android:id="@+id/textNotes"
-                android:hint="Additional notes..." />
+                android:hint="Additional notes..."
+                android:inputType="textMultiLine" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/textPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Repeat Period (def=0)"
+                android:inputType="number" />
         </TableRow>
 
         <TableRow
@@ -52,59 +65,59 @@
             android:background="@android:color/transparent">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <Button
-                    android:text="Pick a date"
+                    android:id="@+id/buttonPickDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/buttonPickDate"
                     android:layout_weight="1"
+                    android:maxWidth="990dp"
                     android:minWidth="85dp"
-                    android:maxWidth="990dp"/>
+                    android:text="Pick a date" />
 
                 <TextView
-                    android:text="Select Date"
+                    android:id="@+id/textViewDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewDate"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:maxWidth="260dp"
                     android:minWidth="260dp"
-                    android:maxWidth="260dp"/>
+                    android:text="Select Date" />
             </LinearLayout>
         </TableRow>
 
         <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:orientation="horizontal">
 
                 <Button
-                    android:text="Pick a time"
+                    android:id="@+id/buttonPickTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/buttonPickTime"
                     android:layout_weight="1"
                     android:maxWidth="86dp"
-                    android:minWidth="60dp"/>
+                    android:minWidth="60dp"
+                    android:text="Pick a time" />
 
                 <TextView
-                    android:text="Select Time"
+                    android:id="@+id/textViewTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewTime"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:maxWidth="300dp"
                     android:minWidth="240dp"
-                    android:maxWidth="300dp"/>
+                    android:text="Select Time" />
             </LinearLayout>
         </TableRow>
 
@@ -113,15 +126,14 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent">
 
-        <Button
-            android:text="Create"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonCreate"
-            android:layout_marginBottom="204dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            />
+            <Button
+                android:id="@+id/buttonCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="204dp"
+                android:text="Create" />
         </TableRow>
     </TableLayout>
 
