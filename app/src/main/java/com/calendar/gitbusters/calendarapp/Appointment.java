@@ -24,6 +24,7 @@ public class Appointment implements Serializable{
     private String time;
     private String title;
     private int period = 0;
+    private int id;
 
     public Appointment(){}
 
@@ -34,7 +35,12 @@ public class Appointment implements Serializable{
         this.time = copy.time;
         this.title = copy.title;
         this.period = copy.period;
+        this.id = copy.id;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public int getPeriod() {
         return period;
