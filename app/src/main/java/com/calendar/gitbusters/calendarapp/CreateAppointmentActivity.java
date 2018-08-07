@@ -40,12 +40,18 @@ public class CreateAppointmentActivity extends AppCompatActivity {
             if(extras == null) {
                 createDate = String.format("%02d-%02d-%d", mDay, mMonth, mYear);
             } else {
-                createDate= extras.getString("Highlighted-Date");
+                createDate = extras.getString("Highlighted-Date");
             }
         } else {
-            createDate= (String) savedInstanceState.getSerializable("Highlighted-Date");
+            createDate = (String) savedInstanceState.getSerializable("Highlighted-Date");
         }
-        pickedDate=createDate;
+
+        String[] magic = createDate.split("-");
+        int createYear = Integer.parseInt(magic[2]);
+        int createMonth = Integer.parseInt(magic[1]) - 1;
+        int createDay = Integer.parseInt(magic[0]);
+
+        pickedDate = createDate;
         // Set up references to GUI elements
         textViewDate = (TextView) findViewById(R.id.textViewDate);
         textViewTime = (TextView) findViewById(R.id.textViewTime);
@@ -60,7 +66,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                     (view, year, month, dayOfMonth) -> {
                         pickedDate = String.format("%02d-%02d-%d",dayOfMonth,(month+1),year);
                         textViewDate.setText(pickedDate);
-                    }, mYear, mMonth, mDay);
+                    }, createYear, createMonth, createDay);
             dpd.show();
         });
         findViewById(R.id.buttonPickTime).setOnClickListener(v -> {

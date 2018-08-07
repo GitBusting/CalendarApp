@@ -26,13 +26,22 @@ public class Appointment implements Serializable{
     private int period = 0;
     private int id;
 
-    public int getId() {
-        return id;
+    public Appointment(){}
+
+    public Appointment(Appointment copy)
+    {
+        this.date = copy.date;
+        this.notes = copy.notes;
+        this.time = copy.time;
+        this.title = copy.title;
+        this.period = copy.period;
+        this.id = copy.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
     public int getPeriod() {
         return period;
     }
