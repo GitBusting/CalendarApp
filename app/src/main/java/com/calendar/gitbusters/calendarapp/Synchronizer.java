@@ -146,37 +146,6 @@ public class Synchronizer extends Thread {
         }
     }
 
-    public void delApp(Appointment extApt) {
-        HttpsURLConnection conn = null, connPut = null;
-        try {
-            URL webServerUrl = new URL("https://safe-sea-33768.herokuapp.com/appointments/" + extApt.getId());
-
-            conn =
-                    (HttpsURLConnection) webServerUrl.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-
-            conn.setRequestMethod("DELETE");
-            conn.connect();
-
-            if (conn.getResponseCode() == 200) {
-
-            } else {
-                // Unable to connect
-                System.out.println("a very bad thing happened.");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null)
-                conn.disconnect();
-            if (connPut != null)
-                connPut.disconnect();
-        }
-    }
-
-
     public void addApt(Appointment extApt)
     {
         this.apts.add(extApt);

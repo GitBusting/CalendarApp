@@ -193,6 +193,20 @@ public class MainActivity extends AppCompatActivity {
         calendar.highlightDates(aptList);
     }
 
+    public static void deleteAptBecauseWeHaveNoTime(int id)
+    {
+        for(Appointment apt: aptCopies)
+            if(apt.getId() == id) {
+                aptCopies.remove(apt);
+                break;
+            }
+        for(Appointment apt: apts)
+            if(apt.getId() == id) {
+                apts.remove(apt);
+                break;
+            }
+    }
+
     /**
      * TODO a template appointment list initializer function
      * This function is called to synchronize user's events

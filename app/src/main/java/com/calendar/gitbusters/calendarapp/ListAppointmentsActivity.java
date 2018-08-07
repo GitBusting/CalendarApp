@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ListAppointmentsActivity extends AppCompatActivity {
 
     private ArrayList<Appointment> aptList = null;
@@ -102,7 +106,7 @@ public class ListAppointmentsActivity extends AppCompatActivity {
                 try {
                     Date dateAndTime = dateFormat.parse(i.getDate() + " " + i.getTime());
                     String datePlusTitle = dateAndTime.getTime() + i.getTitle();
-                    String toPrint = i.getTitle() + "\n" + i.getNotes() + "\n" +dateAndTime.toString();
+                    String toPrint = i.getTitle() + "\n" + i.getNotes() + "\n" +dateAndTime.toString()+ "\n /" + i.getId() + "/";
                     ListingSS.put(datePlusTitle, toPrint);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -116,7 +120,8 @@ public class ListAppointmentsActivity extends AppCompatActivity {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm",Locale.UK);
             for (Appointment i : aptList) {
 
-                String txt = i.getTitle().substring(0, 1).toUpperCase() + i.getTitle().substring(1) + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime() + "\n /" + i.getId() + "/";
+                String txt = i.getTitle().substring(0, 1).toUpperCase() + i.getTitle().substring(1) +
+                        "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime() + "\n /" + i.getId() + "/";
                 if (!txt.toLowerCase().contains(search.toLowerCase())) continue;
                 try {
                     Date dateAndTime = dateFormat.parse(i.getDate() + " " + i.getTime());
@@ -144,12 +149,17 @@ public class ListAppointmentsActivity extends AppCompatActivity {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Synchronizer syn = new Synchronizer();
                     for (Appointment a : aptList) {
                         String tmp = entry.getKey().toString() + entry.getValue().toString();
+                        Logger.getGlobal().log(Level.INFO, "tmp: " + tmp + " entry key: " +
+                                entry.getKey().toString() + " entry val: " + entry.getValue().toString()
+                                + " a id: " + a.getId());
                         if (tmp.contains("/" + a.getId() + "/")) {
                             EntryRemover er = new EntryRemover(a);
                             er.start();
+                            MainActivity.deleteAptBecauseWeHaveNoTime(a.getId());
+                            Logger.getGlobal().log(Level.INFO,view.toString());
+                            ((ViewGroup)view.getParent().getParent()).removeView((ViewGroup)view.getParent());
                             break;
                         }
                     }
