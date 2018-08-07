@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     // References to some important objects
     private static ArrayList<Appointment> apts = null;
+    private static ArrayList<Appointment> aptCopies = null;
     private static CalendarPickerView calendar = null;
     private static String highlightedDate = "";
     Synchronizer syn = new Synchronizer();
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         // Initialize the proposed structure
         // for holding the user's appointments
         apts = new ArrayList<>();
+        aptCopies = new ArrayList<>(); // Corresponding apt copies for the
+                                                    // "highlightDates" dates
 
         calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
             @Override
@@ -60,18 +65,18 @@ public class MainActivity extends AppCompatActivity {
                 int mMonth = cldr.get(Calendar.MONTH) + 1;
                 int mDay = cldr.get(Calendar.DAY_OF_MONTH);
                 Appointment apt = null;
-                for(Appointment searchApt : apts)
+                String selDate = String.format("%02d-%02d-%d",mDay,mMonth,mYear);
+                for(Appointment searchApt : aptCopies)
                 {
-                    String selDate = String.format("%02d-%02d-%d",mDay,mMonth,mYear);
                     if(searchApt.getDate().equals(selDate))
                         apt = searchApt;
                 }
+                highlightedDate = selDate;
                 // Show apt's title if any appointment matches.
                 if(apt == null) {
                     return;
                 }
                 else {
-                    highlightedDate = apt.getDate();
                     Snackbar.make(findViewById(R.id.content_main), apt.getTitle(), 3000).show();
                 }
             }
@@ -173,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         // a collection.
         ArrayList<Date> aptList = new ArrayList<>();
         aptList.add(aptDate);
+        aptCopies.add(apt);
         // If this is a periodic apt we display multiple
         // apts on the calendar
         if(apt.getPeriod() > 0)
@@ -184,7 +190,10 @@ public class MainActivity extends AppCompatActivity {
             for(int i = 0 ; i < 30 ; i += prd) {
                 aptDate = new Date(aptDate.getTime() +
                     prd * 24 * 60 * 60 * 1000); // add period amount of milliseconds
+                Appointment aptCopy = new Appointment(apt);
+                aptCopy.setDate(sdf.format(aptDate));
                 aptList.add(aptDate);
+                aptCopies.add(aptCopy);
             }
         }
         calendar.highlightDates(aptList);

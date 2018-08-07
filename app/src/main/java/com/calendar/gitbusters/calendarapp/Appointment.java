@@ -25,6 +25,17 @@ public class Appointment implements Serializable{
     private String title;
     private int period = 0;
 
+    public Appointment(){}
+
+    public Appointment(Appointment copy)
+    {
+        this.date = copy.date;
+        this.notes = copy.notes;
+        this.time = copy.time;
+        this.title = copy.title;
+        this.period = copy.period;
+    }
+
     public int getPeriod() {
         return period;
     }
