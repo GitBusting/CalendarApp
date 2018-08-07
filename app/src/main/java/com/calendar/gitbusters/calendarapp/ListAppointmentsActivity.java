@@ -116,7 +116,7 @@ public class ListAppointmentsActivity extends AppCompatActivity {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm",Locale.UK);
             for (Appointment i : aptList) {
 
-                String txt = i.getTitle().substring(0,1).toUpperCase()+ i.getTitle().substring(1) + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime();
+                String txt = i.getTitle().substring(0, 1).toUpperCase() + i.getTitle().substring(1) + "\n" + i.getNotes() + "\n" + i.getDate() + ": " + i.getTime() + "\n /" + i.getId() + "/";
                 if (!txt.toLowerCase().contains(search.toLowerCase())) continue;
                 try {
                     Date dateAndTime = dateFormat.parse(i.getDate() + " " + i.getTime());
@@ -141,6 +141,19 @@ public class ListAppointmentsActivity extends AppCompatActivity {
             } else
                 tv.setText(entry.getKey().toString());
             b.setText(R.string.editButtonTxt);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Synchronizer syn = new Synchronizer();
+                    for (Appointment a : aptList) {
+                        String tmp = entry.getKey().toString() + entry.getValue().toString();
+                        if (tmp.contains("/" + a.getId() + "/")) {
+                            
+                            break;
+                        }
+                    }
+                }
+            });
 
             // Do the below for a relatively more beautiful list layout.
             tv.setLayoutParams(new

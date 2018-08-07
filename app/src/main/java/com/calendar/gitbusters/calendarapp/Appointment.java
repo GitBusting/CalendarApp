@@ -24,7 +24,15 @@ public class Appointment implements Serializable{
     private String time;
     private String title;
     private int period = 0;
+    private int id;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public int getPeriod() {
         return period;
     }
@@ -77,7 +85,7 @@ public class Appointment implements Serializable{
     {
         JSONObject jso = new JSONObject();
         try {
-            jso.put("id",23193);
+            jso.put("id", this.id);
             jso.put("name",this.title);
             String[] dp = this.date.split("-");
             String dateTime = dp[2] + "-" + dp[1] + "-" + dp[0] + "T";

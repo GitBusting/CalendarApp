@@ -93,12 +93,14 @@ public class Synchronizer extends Thread {
                     while (jsonReader.hasNext()) { // Loop through all keys
                         String key = jsonReader.nextName(); // Fetch the next
                         // This matches the title of our appointment
-                        if(key.equals("name"))
+                        if (key.equals("id")) {
+                            int id = jsonReader.nextInt();
+                            apt.setId(id);
+                        } else if (key.equals("name"))
                         {
                             String val = jsonReader.nextString();
                             apt.setTitle(val);
                             System.out.println("title: " + val);
-                            apt.setSync(false);
                         }
                         // Extract date and time from this field
                         else if (key.equals("start_time"))
@@ -142,6 +144,37 @@ public class Synchronizer extends Thread {
                 connPut.disconnect();
         }
     }
+
+    public void delApp(Appointment extApt) {
+        HttpsURLConnection conn = null, connPut = null;
+        try {
+            URL webServerUrl = new URL("https://safe-sea-33768.herokuapp.com/appointments/" + extApt.getId());
+
+            conn =
+                    (HttpsURLConnection) webServerUrl.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+
+            conn.setRequestMethod("DELETE");
+            conn.connect();
+
+            if (conn.getResponseCode() == 200) {
+
+            } else {
+                // Unable to connect
+                System.out.println("a very bad thing happened.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null)
+                conn.disconnect();
+            if (connPut != null)
+                connPut.disconnect();
+        }
+    }
+
 
     public void addApt(Appointment extApt)
     {

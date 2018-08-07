@@ -4,6 +4,6 @@
     <string name="apt_example_list_entry">Imeaan\nLoL\n21-02-03: 43-34</string>
     <string name="search">Search</string>
     <string name="nothingtxt">There seems to be nothing here...</string>
-    <string name="editButtonTxt">EDIT</string>
+    <string name="editButtonTxt">DELETE</string>
     <string name="defaultPickedTime">12:00</string>
 </resources>
