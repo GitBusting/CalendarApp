@@ -148,7 +148,8 @@ public class ListAppointmentsActivity extends AppCompatActivity {
                     for (Appointment a : aptList) {
                         String tmp = entry.getKey().toString() + entry.getValue().toString();
                         if (tmp.contains("/" + a.getId() + "/")) {
-                            
+                            EntryRemover er = new EntryRemover(a);
+                            er.start();
                             break;
                         }
                     }

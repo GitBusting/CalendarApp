@@ -7,16 +7,15 @@ import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class EntryRemover extends Thread{
+public class EntryRemover extends Thread {
 
     private Appointment delApt = null;
 
-    public EntryRemover(Appointment apt)
-    {
+    public EntryRemover(Appointment apt) {
         delApt = apt;
     }
 
-    public void run(){
+    public void run() {
         HttpsURLConnection conn = null;
         try {
             URL webServerUrl = new URL("https://safe-sea-33768.herokuapp.com/appointments/" +
@@ -40,7 +39,7 @@ public class EntryRemover extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(conn!=null)
+            if (conn != null)
                 conn.disconnect();
         }
     }

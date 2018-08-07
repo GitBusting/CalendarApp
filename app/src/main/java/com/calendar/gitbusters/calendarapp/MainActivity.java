@@ -7,10 +7,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // for holding the user's appointments
         apts = new ArrayList<>();
         aptCopies = new ArrayList<>(); // Corresponding apt copies for the
-                                                    // "highlightDates" dates
+        // "highlightDates" dates
 
         calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
             @Override
@@ -62,9 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 int mMonth = cldr.get(Calendar.MONTH) + 1;
                 int mDay = cldr.get(Calendar.DAY_OF_MONTH);
                 Appointment apt = null;
-                String selDate = String.format("%02d-%02d-%d",mDay,mMonth,mYear);
-                for(Appointment searchApt : aptCopies)
-                {
+                String selDate = String.format("%02d-%02d-%d", mDay, mMonth, mYear);
+                for (Appointment searchApt : aptCopies) {
                     if(searchApt.getDate().equals(selDate))
                         apt = searchApt;
                 }

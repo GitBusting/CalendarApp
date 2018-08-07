@@ -8,8 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -123,12 +121,9 @@ public class Synchronizer extends Thread {
                         {
                             int prd = jsonReader.nextInt();
                             apt.setPeriod(prd);
-                        }
-                        else if (key.equals("id"))
-                        {
+                        } else if (key.equals("id")) {
                             apt.setId(jsonReader.nextInt());
-                        }
-                        else // we do not need these
+                        } else // we do not need these
                             jsonReader.skipValue();
                     }
                     apts.add(apt);
