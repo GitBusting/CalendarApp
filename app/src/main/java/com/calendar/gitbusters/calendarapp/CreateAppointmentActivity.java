@@ -55,51 +55,36 @@ public class CreateAppointmentActivity extends AppCompatActivity {
 
         if(pickedDate!=null) textViewDate.setText(pickedDate);
         textViewTime.setText(pickedTime);
-        findViewById(R.id.buttonPickDate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        findViewById(R.id.buttonPickDate).setOnClickListener(v -> {
+            DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
+                    (view, year, month, dayOfMonth) -> {
                         pickedDate = String.format("%02d-%02d-%d",dayOfMonth,(month+1),year);
                         textViewDate.setText(pickedDate);
-                    }
-                        }, mYear, mMonth, mDay);
-                dpd.show();
-            }
+                    }, mYear, mMonth, mDay);
+            dpd.show();
         });
-        findViewById(R.id.buttonPickTime).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog tpd = new TimePickerDialog(v.getContext(),
-                        new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        findViewById(R.id.buttonPickTime).setOnClickListener(v -> {
+            TimePickerDialog tpd = new TimePickerDialog(v.getContext(),
+                    (view, hourOfDay, minute) -> {
                         pickedTime = String.format("%02d:%02d",hourOfDay,minute);
                         textViewTime.setText(pickedTime);
-                    }
-                        }, 12, 0, false);
-                tpd.show();
-            }
+                    }, 12, 0, false);
+            tpd.show();
         });
-        findViewById(R.id.buttonCreate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = textTitle.getText().toString();
-                String notes = textNotes.getText().toString();
-                int period = 0;
-                if (!textPeriod.getText().toString().equals(""))
-                    period = Integer.parseInt(textPeriod.getText().toString());
-                if(title.equals("") || notes.equals("") || pickedDate == null ||
-                        pickedTime == null)
-                    Snackbar.make(v,"Please fill all the fields above before " +
-                            "clicking \"CREATE\"",5000).show();
-                else
-                {
-                    System.out.println("Title: " + title + "Notes: " + notes);
-                    createAppointment(title, notes, period, pickedDate, pickedTime);
-                }
+        findViewById(R.id.buttonCreate).setOnClickListener(v -> {
+            String title = textTitle.getText().toString();
+            String notes = textNotes.getText().toString();
+            int period = 0;
+            if (!textPeriod.getText().toString().equals(""))
+                period = Integer.parseInt(textPeriod.getText().toString());
+            if(title.equals("") || notes.equals("") || pickedDate == null ||
+                    pickedTime == null)
+                Snackbar.make(v,"Please fill all the fields above before " +
+                        "clicking \"CREATE\"",5000).show();
+            else
+            {
+                System.out.println("Title: " + title + "Notes: " + notes);
+                createAppointment(title, notes, period, pickedDate, pickedTime);
             }
         });
     }

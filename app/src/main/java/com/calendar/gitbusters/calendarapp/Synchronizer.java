@@ -115,7 +115,13 @@ public class Synchronizer extends Thread {
                             apt.setDate(date);
                             apt.setTime(time);
                             apt.setSync(true);
-                        }else // we do not need these
+                        }
+                        else if (key.equals("period"))
+                        {
+                            int prd = jsonReader.nextInt();
+                            apt.setPeriod(prd);
+                        }
+                        else // we do not need these
                             jsonReader.skipValue();
                     }
                     apts.add(apt);

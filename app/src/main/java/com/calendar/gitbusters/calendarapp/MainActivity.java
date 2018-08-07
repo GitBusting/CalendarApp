@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.text.ParseException;
@@ -14,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,9 +33,10 @@ public class MainActivity extends AppCompatActivity {
         // Pull user's appointments from the database.
         synchronizeAppointments();
 
+        System.out.println("This is a token: " + FirebaseInstanceId.getInstance().getToken());
+
         // Initialize a calendarpickerview with a year earlier
         // as the minDate and a year later as the maxDate
-
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
         calendar = (CalendarPickerView) findViewById(R.id.calendarView);
@@ -63,47 +67,39 @@ public class MainActivity extends AppCompatActivity {
                         apt = searchApt;
                 }
                 // Show apt's title if any appointment matches.
-
-                highlightedDate = String.format("%02d-%02d-%d", mDay, mMonth+1, mYear);
                 if(apt == null) {
                     return;
                 }
-                else
-                    Snackbar.make(findViewById(R.id.content_main),apt.getTitle(), 3000).show();
-
+                else {
+                    highlightedDate = apt.getDate();
+                    Snackbar.make(findViewById(R.id.content_main), apt.getTitle(), 3000).show();
+                }
             }
-
             @Override
             public void onDateUnselected(Date date) {
             }
         });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabCreate);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // switch to appointment creator activity when clicked
-                Intent i = new Intent(view.getContext(),
-                        CreateAppointmentActivity.class);
-                if (!highlightedDate.isEmpty())
-                    i.putExtra("Highlighted-Date", highlightedDate);
-                startActivityForResult(i, 1);
-            }
+        fab.setOnClickListener(view -> {
+            // switch to appointment creator activity when clicked
+            Intent i = new Intent(view.getContext(),
+                    CreateAppointmentActivity.class);
+            if (!highlightedDate.isEmpty())
+                i.putExtra("Highlighted-Date", highlightedDate);
+            startActivityForResult(i, 1);
         });
 
         FloatingActionButton fabList = (FloatingActionButton) findViewById(R.id.fabList);
-        fabList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // switch to appointment lister activity when clicked
-                Intent i = new Intent(view.getContext(),
-                        ListAppointmentsActivity.class);
-                // TODO there may be a better way to share appointments
-                // with the appointment lister activity, use intent
-                // extras for now
-                i.putExtra("apt-list",apts);
-                startActivity(i);
-            }
+        fabList.setOnClickListener(view -> {
+            // switch to appointment lister activity when clicked
+            Intent i = new Intent(view.getContext(),
+                    ListAppointmentsActivity.class);
+            // TODO there may be a better way to share appointments
+            // with the appointment lister activity, use intent
+            // extras for now
+            i.putExtra("apt-list",apts);
+            startActivity(i);
         });
 
         // Wait for the thread that pulls appointments
@@ -177,6 +173,20 @@ public class MainActivity extends AppCompatActivity {
         // a collection.
         ArrayList<Date> aptList = new ArrayList<>();
         aptList.add(aptDate);
+        // If this is a periodic apt we display multiple
+        // apts on the calendar
+        if(apt.getPeriod() > 0)
+        {
+            System.out.println("Found a periodic apt: " + apt.getTitle());
+            int prd = apt.getPeriod();
+            // For any periodic apts, show each apt
+            // in the next month
+            for(int i = 0 ; i < 30 ; i += prd) {
+                aptDate = new Date(aptDate.getTime() +
+                    prd * 24 * 60 * 60 * 1000); // add period amount of milliseconds
+                aptList.add(aptDate);
+            }
+        }
         calendar.highlightDates(aptList);
     }
 

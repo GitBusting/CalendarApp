@@ -23,7 +23,6 @@ public class Appointment implements Serializable{
     private String notes;
     private String time;
     private String title;
-
     private int period = 0;
 
     public int getPeriod() {
