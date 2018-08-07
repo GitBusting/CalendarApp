@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -33,6 +30,9 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         int mYear = cldr.get(Calendar.YEAR);
         int mMonth = cldr.get(Calendar.MONTH) + 1;
         int mDay = cldr.get(Calendar.DAY_OF_MONTH);
+        int mHour = cldr.get(Calendar.HOUR_OF_DAY);
+        int mMinute = cldr.get(Calendar.MINUTE);
+
 
         String createDate;
         if (savedInstanceState == null) {
@@ -74,7 +74,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                     (view, hourOfDay, minute) -> {
                         pickedTime = String.format("%02d:%02d",hourOfDay,minute);
                         textViewTime.setText(pickedTime);
-                    }, 12, 0, false);
+                    }, mHour, mMinute, false);
             tpd.show();
         });
         findViewById(R.id.buttonCreate).setOnClickListener(v -> {
